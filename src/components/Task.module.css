@@ -1,0 +1,51 @@
+.root {
+    background: #f5f2ff;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+.success .label {
+    background-color: #adff2f;
+
+}
+
+.success .title {
+    text-decoration: line-through;
+    text-decoration-color: #fff;
+}
+
+.success input[type='checkbox'] {
+    accent-color: #adff2f;
+}
+
+.title {
+    flex: 1;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+}
+
+.label {
+    border-radius: .375rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    background-color: #e7a027;
+
+}
+
+.label.label_success {
+
+}
+
+.body {
+    margin: 1rem 0 0;
+}

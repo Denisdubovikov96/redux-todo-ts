@@ -1,56 +1,50 @@
 import React from 'react';
-import logo from './logo.svg';
-import { Counter } from './features/counter/Counter';
+import { useAppDispatch, useAppSelector } from './store';
+import { addTask, taskSelector, updateTaskStatus } from './store/taskList.module';
+
 import './App.css';
+import AddTask from './components/AddTask';
+import Task from './components/Task';
+
+
 
 function App() {
+  const tasks = useAppSelector(taskSelector);
+  const dispatch = useAppDispatch();
+
+  
+  const sorted = [...tasks].sort((a,b) => {
+    if(a.isDone || b.isDone) {
+      return Number(a.isDone) - Number(b.isDone)
+    }
+    
+    return new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime()
+  })
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Counter />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <span>
-          <span>Learn </span>
-          <a
-            className="App-link"
-            href="https://reactjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux
-          </a>
-          <span>, </span>
-          <a
-            className="App-link"
-            href="https://redux-toolkit.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Redux Toolkit
-          </a>
-          ,<span> and </span>
-          <a
-            className="App-link"
-            href="https://react-redux.js.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            React Redux
-          </a>
-        </span>
-      </header>
+      <div className='container'>
+      <h2 className='title'>ADD TASK</h2>
+      <AddTask onAdd={(data) => dispatch(addTask(data))}/>
+      </div>
+
+      <div className='container'>
+        <h2 className='title'>TASKS</h2>
+        <div className='list'>
+
+        {sorted.map((task) => {
+          
+          return(
+            <Task
+              title={task.title}
+              body={task.body}
+              status={task.isDone}
+              onStatusChange={(status) => dispatch(updateTaskStatus({id: task.id, isDone: status}))}
+            />
+          )
+        })}
+        </div>
+      </div>
     </div>
   );
 }
